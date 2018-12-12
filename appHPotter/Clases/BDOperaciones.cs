@@ -27,6 +27,9 @@ namespace appHPotter.Clases
                 return false;
             }
 
+            bool ExisteUsuario = VerificarExistencia(Usuario);
+            if (ExisteUsuario) return false; 
+
             if (BaseDatos == "SQL")
             {
                 string consulta = $"INSERT INTO Usuario VALUES('{Usuario}','{Clave}',2,1)";
@@ -44,14 +47,19 @@ namespace appHPotter.Clases
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = $"SELECT ";
+                string consulta = $"SELECT COUNT(*) FROM Usuario WHERE Usuario = '{Usuario}'";
                 var cnx = (SqlConnection)BDConnection;
-                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                SqlCommand command = new SqlCommand(consulta, cnx);
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
-                    return Result;
+                    if (reader.Read())
+                    {
+                        Result = (reader.FieldCount > 0) ? true : false;
+                        return Result;
+                    }
                 }
             }
+            return Result;
         }
     }
 }
