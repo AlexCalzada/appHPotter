@@ -31,21 +31,23 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtClave = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbDB = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnCrear = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnCrear);
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.cmbDB);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtClave);
+            this.groupBox1.Controls.Add(this.txtUsuario);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 117);
@@ -72,19 +74,19 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Clave:";
             // 
-            // textBox1
+            // txtUsuario
             // 
-            this.textBox1.Location = new System.Drawing.Point(75, 25);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(176, 20);
-            this.textBox1.TabIndex = 2;
+            this.txtUsuario.Location = new System.Drawing.Point(75, 25);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(176, 20);
+            this.txtUsuario.TabIndex = 2;
             // 
-            // textBox2
+            // txtClave
             // 
-            this.textBox2.Location = new System.Drawing.Point(75, 51);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(176, 20);
-            this.textBox2.TabIndex = 3;
+            this.txtClave.Location = new System.Drawing.Point(75, 51);
+            this.txtClave.Name = "txtClave";
+            this.txtClave.Size = new System.Drawing.Size(176, 20);
+            this.txtClave.TabIndex = 3;
             // 
             // label3
             // 
@@ -95,13 +97,18 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Base de datos:";
             // 
-            // comboBox1
+            // cmbDB
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(110, 88);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(141, 21);
-            this.comboBox1.TabIndex = 5;
+            this.cmbDB.FormattingEnabled = true;
+            this.cmbDB.Items.AddRange(new object[] {
+            "SQL",
+            "Access",
+            "MySQL",
+            "PostgreSQL"});
+            this.cmbDB.Location = new System.Drawing.Point(110, 88);
+            this.cmbDB.Name = "cmbDB";
+            this.cmbDB.Size = new System.Drawing.Size(141, 21);
+            this.cmbDB.TabIndex = 5;
             // 
             // button1
             // 
@@ -111,6 +118,17 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "Iniciar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnCrear
+            // 
+            this.btnCrear.Location = new System.Drawing.Point(29, 171);
+            this.btnCrear.Name = "btnCrear";
+            this.btnCrear.Size = new System.Drawing.Size(99, 23);
+            this.btnCrear.TabIndex = 7;
+            this.btnCrear.Text = "Crear Usuario";
+            this.btnCrear.UseVisualStyleBackColor = true;
+            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
             // 
             // frmIniciarSesion
             // 
@@ -130,12 +148,13 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbDB;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtClave;
+        private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnCrear;
     }
 }
 
