@@ -17,14 +17,14 @@ namespace appHPotter.Formularios
         private object BDConnection { get; set; }
         private string BaseDatos { get; set; }
 
-        public frmCreaUsuario(string BaseDatos, object Connection)
+        public frmCreaUsuario(string BaseDatos, object BDConnection)
         {
             InitializeComponent();
             switch (BaseDatos)
             {
                 case "SQL":
                     this.BaseDatos = BaseDatos;
-                    this.BDConnection = Connection;
+                    this.BDConnection = BDConnection;
                     break;
             }
             

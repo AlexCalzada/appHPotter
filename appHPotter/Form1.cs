@@ -23,12 +23,15 @@ namespace appHPotter
         private void button1_Click(object sender, EventArgs e)
         {
             Conexion conexion = new Conexion(txtUsuario.Text, txtClave.Text, cmbDB.Text);
+            Formularios.frmPrincipal frmPrincipal = null;
             switch (cmbDB.Text)
             {
                 case "SQL":
                     this.BDConnection = conexion.ObtenerConexion();
+                    frmPrincipal = new Formularios.frmPrincipal(cmbDB.Text, BDConnection);
                     break;
             }
+            frmPrincipal.Show();
         }
 
         private void btnCrear_Click(object sender, EventArgs e)

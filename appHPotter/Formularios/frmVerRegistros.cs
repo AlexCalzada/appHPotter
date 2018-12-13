@@ -1,4 +1,5 @@
-﻿using System;
+﻿using appHPotter.Clases;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,12 +11,12 @@ using System.Windows.Forms;
 
 namespace appHPotter.Formularios
 {
-    public partial class frmPrincipal : Form
+    public partial class frmVerRegistros : Form
     {
         private object BDConnection { get; set; }
         private string BaseDatos { get; set; }
 
-        public frmPrincipal(string BaseDatos, object BDConnection)
+        public frmVerRegistros(string BaseDatos, object BDConnection)
         {
             InitializeComponent();
             switch (BaseDatos)
@@ -28,19 +29,11 @@ namespace appHPotter.Formularios
 
         }
 
-        private void verClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripLabel1_Click(object sender, EventArgs e)
         {
-            frmVerRegistros f = new frmVerRegistros(BaseDatos, BDConnection);
-            f.MdiParent = this;
-            f.Show();
-        }
-
-        private void insertarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmCrearCliente f = new frmCrearCliente(BaseDatos, BDConnection);
-            f.MdiParent = this;
-            f.Show();
-
+            listView1.Clear();
+            BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
+            BDO.CargarEnListViewSql(listView1, "SELECT * FROM Cliente");
         }
     }
 }

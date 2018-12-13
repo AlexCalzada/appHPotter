@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace appHPotter.Clases
 {
@@ -18,7 +20,57 @@ namespace appHPotter.Clases
             this.BDConnection = BDConnection;
             this.BaseDatos = BaseDatos;
         }
-        
+
+        public void CargarEnListViewSql(ListView Lista, string consulta)
+        {
+            SqlConnection ccn = null;
+            switch (BaseDatos)
+            {
+                case "SQL":
+                    ccn = (SqlConnection)BDConnection;
+                    break;
+            }
+            try
+            {
+                ccn.Close();
+                ccn.Open();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error en la conexión: \n" + ex, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ccn.Close();
+            }
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter(consulta, ccn);
+
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
+                {
+                    Lista.Columns.Add(ds.Tables[0].Columns[i].ColumnName);
+                    Lista.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                }
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    ListViewItem item = new ListViewItem(row[0].ToString());
+                    for (int j = 1; j < ds.Tables[0].Columns.Count; j++)
+                    {
+                        item.SubItems.Add(row[j].ToString());
+                    }
+                    Lista.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error en la conexión: \n" + ex, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ccn.Close();
+            }
+            ccn.Close();
+        }
+
         public bool CrearUsuario(string Usuario, string Clave)
         {
             if (string.IsNullOrEmpty(Usuario) || string.IsNullOrEmpty(Clave))
@@ -47,7 +99,7 @@ namespace appHPotter.Clases
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = $"SELECT COUNT(*) FROM Usuario WHERE Usuario = '{Usuario}'";
+                string consulta = $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'";
                 var cnx = (SqlConnection)BDConnection;
                 SqlCommand command = new SqlCommand(consulta, cnx);
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -60,6 +112,21 @@ namespace appHPotter.Clases
                 }
             }
             return Result;
+        }
+
+        public bool InsertarCliente(string Nombre, string Paterno, string Materno, string Fecha, string CURP, string Telefono, string Calle, string Colonia)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"INSERT INTO Cliente VALUES('{Nombre}','{Paterno}','{Materno}','{Fecha}','{CURP}','{Telefono}','{Calle}','{Colonia}',1)";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
         }
     }
 }
