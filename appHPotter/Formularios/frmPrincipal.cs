@@ -89,12 +89,21 @@ namespace appHPotter.Formularios
 
         private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmEliminaRegistro f = new frmEliminaRegistro(BaseDatos, BDConnection, "Cliente");
+            f.MdiParent = this;
+            f.Show();
         }
 
         private void actualizarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmActualizaMembresia f = new frmActualizaMembresia(BaseDatos, BDConnection);
+            f.MdiParent = this;
+            f.Show();
+        }
+
+        private void eliminarToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmEliminaRegistro f = new frmEliminaRegistro(BaseDatos, BDConnection, "Membresia");
             f.MdiParent = this;
             f.Show();
         }

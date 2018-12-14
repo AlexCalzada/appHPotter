@@ -218,5 +218,27 @@ namespace appHPotter.Clases
             }
             return false;
         }
+
+        public bool EliminaRegistro(string ID, string Tabla)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"DELETE FROM {Tabla} WHERE id{Tabla} = {ID}";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    try
+                    {
+                        Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
+                    return Result;
+                }
+            }
+            return false;
+        }
     }
 }

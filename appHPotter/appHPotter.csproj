@@ -78,6 +78,12 @@
     <Compile Include="Formularios\frmCreaUsuario.Designer.cs">
       <DependentUpon>frmCreaUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\frmEliminaRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmEliminaRegistro.Designer.cs">
+      <DependentUpon>frmEliminaRegistro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\frmInsertarClienteUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmCreaUsuario.resx">
       <DependentUpon>frmCreaUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmEliminaRegistro.resx">
+      <DependentUpon>frmEliminaRegistro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmInsertarClienteUsuario.resx">
       <DependentUpon>frmInsertarClienteUsuario.cs</DependentUpon>
