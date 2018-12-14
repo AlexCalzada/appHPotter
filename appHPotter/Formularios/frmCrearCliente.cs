@@ -31,9 +31,9 @@ namespace appHPotter.Formularios
         private void btnCrear_Click(object sender, EventArgs e)
         {
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            var c = BDO.InsertarCliente(txtNombre.Text, txtPaterno.Text, txtMaterno.Text, txtFecha.Text, txtCuyrp.Text, txtTelefono.Text, txtCalle.Text, txtColonia.Text) ?
+            var mensaje = BDO.InsertarCliente(txtNombre.Text, txtPaterno.Text, txtMaterno.Text, txtFecha.Text, txtCuyrp.Text, txtTelefono.Text, txtCalle.Text, txtColonia.Text) ?
                 "Cliente creado." : "Error no se creo.";
-            MessageBox.Show(c);
+            MessageBox.Show(mensaje);
         }
     }
 }

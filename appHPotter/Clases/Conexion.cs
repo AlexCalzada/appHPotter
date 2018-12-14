@@ -25,13 +25,7 @@ namespace appHPotter.Clases
 
         public object ObtenerConexion()
         {
-            switch (BaseDatos)
-            {
-                case "SQL":
-                    return this.BDConnection;
-                default:
-                    return null;
-            }
+            return BDConnection;
         }
 
         private void VerificarConexion()
@@ -64,11 +58,6 @@ namespace appHPotter.Clases
             {
                 System.Windows.Forms.MessageBox.Show($"Se produjo una excepcion\n {ex}");
             }
-        }
-
-        private void VerificarCredenciales()
-        {
-            
         }
     }
 }

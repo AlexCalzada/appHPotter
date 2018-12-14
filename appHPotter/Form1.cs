@@ -36,6 +36,7 @@ namespace appHPotter
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
+            BDConnection = null;
             Formularios.frmCreaUsuario frm = null;
             if (BDConnection is null)
             {

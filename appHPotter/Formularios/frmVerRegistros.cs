@@ -31,9 +31,20 @@ namespace appHPotter.Formularios
 
         private void toolStripLabel1_Click(object sender, EventArgs e)
         {
+        }
+
+        private void verClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
             BDO.CargarEnListViewSql(listView1, "SELECT * FROM Cliente");
+        }
+
+        private void verClientesConUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            listView1.Clear();
+            BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
+            BDO.CargarEnListViewSql(listView1, "SELECT U.Usuario,C.Nombre +  ' ' + C.ApellidoPaterno AS Nombre,C.CURP,c.Telefono,cu.FechaIngreso,cu.FechaBaja,cu.Estatus FROM Cliente C INNER JOIN ClienteUsuario CU ON C.idCliente = CU.idCliente INNER JOIN Usuario U  ON U.idUsuario = CU.idUsuario");
         }
     }
 }

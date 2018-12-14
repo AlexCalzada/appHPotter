@@ -32,8 +32,8 @@ namespace appHPotter.Clases
             }
             try
             {
-                ccn.Close();
-                ccn.Open();
+                //ccn.Close();
+                //ccn.Open();
             }
             catch (Exception ex)
             {
@@ -66,16 +66,16 @@ namespace appHPotter.Clases
             catch (Exception ex)
             {
                 MessageBox.Show("Error en la conexión: \n" + ex, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ccn.Close();
+                //ccn.Close();
             }
-            ccn.Close();
+            //ccn.Close();
         }
 
         public bool CrearUsuario(string Usuario, string Clave)
         {
             if (string.IsNullOrEmpty(Usuario) || string.IsNullOrEmpty(Clave))
             {
-                System.Windows.Forms.MessageBox.Show("No puede dejar espacio vacios");
+                MessageBox.Show("No puede dejar espacio vacios");
                 return false;
             }
 
@@ -119,6 +119,66 @@ namespace appHPotter.Clases
             if (BaseDatos == "SQL")
             {
                 string consulta = $"INSERT INTO Cliente VALUES('{Nombre}','{Paterno}','{Materno}','{Fecha}','{CURP}','{Telefono}','{Calle}','{Colonia}',1)";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
+
+        public bool InsertarClienteUsuario(string ClienteID, string UsuarioID, string FechaAlta, string FechaBaja)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"INSERT INTO ClienteUsuario VALUES({ClienteID},{UsuarioID},'{FechaAlta}','{FechaBaja}',1)";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
+
+        public bool InsertarNuevaMembresia(string Membresia)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"INSERT INTO TipoMembresia VALUES('{Membresia}',1)";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
+
+        public bool InsertarMembresia(string Descripcion, string FechaInicial, string FechaFinal, string Precio, string IDMembresia)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"INSERT INTO Membresia VALUES('{Descripcion}','{FechaInicial}','{FechaFinal}',{Precio},{IDMembresia},1)";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
+
+        public bool InsertarClienteMembresia(string IDCliente, string IDMembresia)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"INSERT INTO ClienteMembresia VALUES('{IDCliente}','{IDMembresia}',1)";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
                 {

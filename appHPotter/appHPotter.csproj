@@ -66,11 +66,29 @@
     <Compile Include="Formularios\frmCreaUsuario.Designer.cs">
       <DependentUpon>frmCreaUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\frmInsertarClienteUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmInsertarClienteUsuario.Designer.cs">
+      <DependentUpon>frmInsertarClienteUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmMembresiaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmMembresiaCliente.Designer.cs">
+      <DependentUpon>frmMembresiaCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmTipoMembresia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmTipoMembresia.Designer.cs">
+      <DependentUpon>frmTipoMembresia.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\frmVerRegistros.cs">
       <SubType>Form</SubType>
@@ -89,8 +107,17 @@
     <EmbeddedResource Include="Formularios\frmCreaUsuario.resx">
       <DependentUpon>frmCreaUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmInsertarClienteUsuario.resx">
+      <DependentUpon>frmInsertarClienteUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmMembresiaCliente.resx">
+      <DependentUpon>frmMembresiaCliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmTipoMembresia.resx">
+      <DependentUpon>frmTipoMembresia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmVerRegistros.resx">
       <DependentUpon>frmVerRegistros.cs</DependentUpon>
