@@ -212,6 +212,7 @@
             this.Name = "frmCrearCliente";
             this.Text = "frmCrearCliente";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.frmCrearCliente_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

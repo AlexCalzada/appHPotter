@@ -19,14 +19,8 @@ namespace appHPotter.Formularios
         public frmTipoMembresia(string BaseDatos, object BDConnection)
         {
             InitializeComponent();
-            switch (BaseDatos)
-            {
-                case "SQL":
-                    this.BaseDatos = BaseDatos;
-                    this.BDConnection = BDConnection;
-                    break;
-            }
-
+            this.BaseDatos = BaseDatos;
+            this.BDConnection = BDConnection;
         }
 
         private void btnInsertar_Click(object sender, EventArgs e)

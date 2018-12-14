@@ -111,6 +111,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frmCreaUsuario";
             this.Text = "frmCreaUsuario";
+            this.Load += new System.EventHandler(this.frmCreaUsuario_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

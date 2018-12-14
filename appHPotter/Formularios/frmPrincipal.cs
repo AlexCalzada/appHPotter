@@ -18,14 +18,8 @@ namespace appHPotter.Formularios
         public frmPrincipal(string BaseDatos, object BDConnection)
         {
             InitializeComponent();
-            switch (BaseDatos)
-            {
-                case "SQL":
-                    this.BaseDatos = BaseDatos;
-                    this.BDConnection = BDConnection;
-                    break;
-            }
-
+            this.BaseDatos = BaseDatos;
+            this.BDConnection = BDConnection;
         }
 
         private void verClientesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -76,7 +70,33 @@ namespace appHPotter.Formularios
 
         private void verMToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            frmVerRegistros f = new frmVerRegistros(BaseDatos, BDConnection);
+            f.MdiParent = this;
+            f.Show();
+        }
 
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void actualizarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmActualizaCliente f = new frmActualizaCliente(BaseDatos, BDConnection);
+            f.MdiParent = this;
+            f.Show();
+        }
+
+        private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void actualizarToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmActualizaMembresia f = new frmActualizaMembresia(BaseDatos, BDConnection);
+            f.MdiParent = this;
+            f.Show();
         }
     }
 }

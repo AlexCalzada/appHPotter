@@ -188,5 +188,35 @@ namespace appHPotter.Clases
             }
             return false;
         }
+
+        public bool ActualizaCliente(string Nombre, string Paterno, string Materno, string Fecha, string CURP, string Telefono, string Calle, string Colonia, string IDCliente)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"UPDATE Cliente SET Nombre = '{Nombre}', ApellidoPaterno = '{Paterno}', ApellidoMaterno = '{Materno}', FechaNacimiento = '{Fecha}', CURP = '{CURP}', Telefono = '{Telefono}', Calle = '{Calle}', Colonia = '{Colonia}' WHERE idCliente = {IDCliente}";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
+
+        public bool ActualizaMembresia(string Descripcion, string FechaInicial, string FechaFinal, string Precio, string ID)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"UPDATE Membresia SET Descripcion = '{Descripcion}', FechaInicial = '{FechaInicial}', FechaFinal = '{FechaFinal}', Precio = {Precio} WHERE idMembresia = {ID}";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
     }
 }

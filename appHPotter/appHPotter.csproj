@@ -54,6 +54,18 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\frmActualizaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmActualizaCliente.Designer.cs">
+      <DependentUpon>frmActualizaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmActualizaMembresia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmActualizaMembresia.Designer.cs">
+      <DependentUpon>frmActualizaMembresia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\frmCrearCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +112,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmActualizaCliente.resx">
+      <DependentUpon>frmActualizaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmActualizaMembresia.resx">
+      <DependentUpon>frmActualizaMembresia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmCrearCliente.resx">
       <DependentUpon>frmCrearCliente.cs</DependentUpon>

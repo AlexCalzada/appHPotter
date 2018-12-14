@@ -19,14 +19,8 @@ namespace appHPotter.Formularios
         public frmMembresiaCliente(string BaseDatos, object BDConnection)
         {
             InitializeComponent();
-            switch (BaseDatos)
-            {
-                case "SQL":
-                    this.BaseDatos = BaseDatos;
-                    this.BDConnection = BDConnection;
-                    break;
-            }
-
+            this.BaseDatos = BaseDatos;
+            this.BDConnection = BDConnection;
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

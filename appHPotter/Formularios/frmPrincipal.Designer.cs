@@ -103,12 +103,14 @@
             this.actualizarToolStripMenuItem.Name = "actualizarToolStripMenuItem";
             this.actualizarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.actualizarToolStripMenuItem.Text = "Actualizar";
+            this.actualizarToolStripMenuItem.Click += new System.EventHandler(this.actualizarToolStripMenuItem_Click);
             // 
             // eliminarToolStripMenuItem
             // 
             this.eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
             this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.eliminarToolStripMenuItem.Text = "Eliminar";
+            this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -161,6 +163,7 @@
             this.actualizarToolStripMenuItem1.Name = "actualizarToolStripMenuItem1";
             this.actualizarToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.actualizarToolStripMenuItem1.Text = "Actualizar";
+            this.actualizarToolStripMenuItem1.Click += new System.EventHandler(this.actualizarToolStripMenuItem1_Click);
             // 
             // eliminarToolStripMenuItem1
             // 
@@ -204,6 +207,7 @@
             this.IsMdiContainer = true;
             this.Name = "frmPrincipal";
             this.Text = "frmPrincipal";
+            this.Load += new System.EventHandler(this.frmPrincipal_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

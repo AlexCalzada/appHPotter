@@ -20,14 +20,8 @@ namespace appHPotter.Formularios
         public frmCreaUsuario(string BaseDatos, object BDConnection)
         {
             InitializeComponent();
-            switch (BaseDatos)
-            {
-                case "SQL":
-                    this.BaseDatos = BaseDatos;
-                    this.BDConnection = BDConnection;
-                    break;
-            }
-            
+            this.BaseDatos = BaseDatos;
+            this.BDConnection = BDConnection;
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -41,6 +35,11 @@ namespace appHPotter.Formularios
             bool result = operaciones.CrearUsuario(txtUsuario.Text, txtClave.Text);
             string mensaje = result ? "Usuario creado" : "Error no se creo";
             MessageBox.Show(mensaje);
+        }
+
+        private void frmCreaUsuario_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -35,5 +35,10 @@ namespace appHPotter.Formularios
                 "Cliente creado." : "Error no se creo.";
             MessageBox.Show(mensaje);
         }
+
+        private void frmCrearCliente_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
