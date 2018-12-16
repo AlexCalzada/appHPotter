@@ -31,12 +31,12 @@ namespace appHPotter.Formularios
                 return;
             }
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            bool result = operaciones.InsertarNuevaMembresia(txtMembresia.Text);
-            string mensaje = result ? "Nuevo tipo de membresia creada" : "Error no se creo";
+            bool result = operaciones.InsertarNuevaSuscripcion(txtMembresia.Text);
+            string mensaje = result ? "Nuevo tipo de Suscripcion creada" : "Error no se creo";
             MessageBox.Show(mensaje);
 
             listView1.Clear();
-            operaciones.CargarEnListViewSql(listView1, "SELECT * FROM TipoMembresia");
+            operaciones.CargarEnListViewSql(listView1, "SELECT * FROM TipoSuscripcion");
         }
 
         private void btnInsertarMembresia_Click(object sender, EventArgs e)
@@ -47,8 +47,8 @@ namespace appHPotter.Formularios
                 return;
             }
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            bool result = operaciones.InsertarMembresia(txtDescripcion.Text, txtFechaInicial.Text, txtFechaFinal.Text, txtPrecio.Text, txtIDMembresia.Text);
-            string mensaje = result ? "Nuevo membresia creada" : "Error no se creo";
+            bool result = operaciones.InsertarSuscripcion(txtDescripcion.Text, txtFechaInicial.Text, txtFechaFinal.Text, txtPrecio.Text, txtIDMembresia.Text);
+            string mensaje = result ? "Nueva Suscripcion creada" : "Error no se creo";
             MessageBox.Show(mensaje);
         }
 
@@ -56,7 +56,7 @@ namespace appHPotter.Formularios
         {
             listView1.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            operaciones.CargarEnListViewSql(listView1, "SELECT * FROM TipoMembresia");
+            operaciones.CargarEnListViewSql(listView1, "SELECT * FROM TipoSuscripcion");
         }
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)

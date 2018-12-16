@@ -49,19 +49,19 @@ namespace appHPotter.Formularios
             }
 
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            bool result = operaciones.ActualizaMembresia(txtDescripcion.Text, txtFechaInicial.Text, txtFechaFinal.Text, txtPrecio.Text, txtID.Text);
-            string mensaje = result ? $"La membresia con ID: {txtID.Text}, se ha actualizado" : "Error no se pudo asignar";
+            bool result = operaciones.ActualizaSuscripcion(txtDescripcion.Text, txtFechaInicial.Text, txtFechaFinal.Text, txtPrecio.Text, txtID.Text);
+            string mensaje = result ? $"La Suscripcion con ID: {txtID.Text}, se ha actualizado" : "Error no se pudo asignar";
             MessageBox.Show(mensaje);
 
             lvMembresia.Clear();
-            operaciones.CargarEnListViewSql(lvMembresia, "SELECT * FROM Membresia");
+            operaciones.CargarEnListViewSql(lvMembresia, "SELECT * FROM Suscripcion");
         }
 
         private void frmActualizaMembresia_Load(object sender, EventArgs e)
         {
             lvMembresia.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            operaciones.CargarEnListViewSql(lvMembresia, "SELECT * FROM Membresia");
+            operaciones.CargarEnListViewSql(lvMembresia, "SELECT * FROM Suscripcion");
         }
     }
 }

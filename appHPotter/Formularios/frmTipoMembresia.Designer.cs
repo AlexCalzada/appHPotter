@@ -33,18 +33,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtDescripcion = new System.Windows.Forms.TextBox();
-            this.txtPrecio = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtFechaInicial = new System.Windows.Forms.DateTimePicker();
-            this.txtFechaFinal = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btnInsertarMembresia = new System.Windows.Forms.Button();
             this.txtIDMembresia = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.txtFechaFinal = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtFechaInicial = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtPrecio = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtDescripcion = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.btnInsertarMembresia = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -71,9 +71,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(126, 13);
+            this.label1.Size = new System.Drawing.Size(129, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Nombre de la membresia:";
+            this.label1.Text = "Nombre de la suscripcion:";
             // 
             // groupBox1
             // 
@@ -85,7 +85,7 @@
             this.groupBox1.Size = new System.Drawing.Size(232, 81);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Tipo de la membresia";
+            this.groupBox1.Text = "Tipo de suscripcion";
             // 
             // groupBox2
             // 
@@ -105,56 +105,34 @@
             this.groupBox2.Size = new System.Drawing.Size(231, 182);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Datos de la membresia";
+            this.groupBox2.Text = "Datos de la suscripcion";
             // 
-            // label2
+            // btnInsertarMembresia
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 29);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Descripcion:";
+            this.btnInsertarMembresia.Location = new System.Drawing.Point(135, 133);
+            this.btnInsertarMembresia.Name = "btnInsertarMembresia";
+            this.btnInsertarMembresia.Size = new System.Drawing.Size(75, 23);
+            this.btnInsertarMembresia.TabIndex = 6;
+            this.btnInsertarMembresia.Text = "Insertar";
+            this.btnInsertarMembresia.UseVisualStyleBackColor = true;
+            this.btnInsertarMembresia.Click += new System.EventHandler(this.btnInsertarMembresia_Click);
             // 
-            // txtDescripcion
+            // txtIDMembresia
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(10, 46);
-            this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(97, 20);
-            this.txtDescripcion.TabIndex = 1;
+            this.txtIDMembresia.Location = new System.Drawing.Point(13, 135);
+            this.txtIDMembresia.Name = "txtIDMembresia";
+            this.txtIDMembresia.ReadOnly = true;
+            this.txtIDMembresia.Size = new System.Drawing.Size(97, 20);
+            this.txtIDMembresia.TabIndex = 9;
             // 
-            // txtPrecio
+            // label6
             // 
-            this.txtPrecio.Location = new System.Drawing.Point(113, 46);
-            this.txtPrecio.Name = "txtPrecio";
-            this.txtPrecio.Size = new System.Drawing.Size(97, 20);
-            this.txtPrecio.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(110, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Precio:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 73);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Fecha Inicial:";
-            // 
-            // txtFechaInicial
-            // 
-            this.txtFechaInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.txtFechaInicial.Location = new System.Drawing.Point(13, 90);
-            this.txtFechaInicial.Name = "txtFechaInicial";
-            this.txtFechaInicial.Size = new System.Drawing.Size(94, 20);
-            this.txtFechaInicial.TabIndex = 5;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 118);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(79, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "ID Suscripcion:";
             // 
             // txtFechaFinal
             // 
@@ -173,22 +151,54 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "Fecha Final:";
             // 
-            // txtIDMembresia
+            // txtFechaInicial
             // 
-            this.txtIDMembresia.Location = new System.Drawing.Point(13, 135);
-            this.txtIDMembresia.Name = "txtIDMembresia";
-            this.txtIDMembresia.ReadOnly = true;
-            this.txtIDMembresia.Size = new System.Drawing.Size(97, 20);
-            this.txtIDMembresia.TabIndex = 9;
+            this.txtFechaInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtFechaInicial.Location = new System.Drawing.Point(13, 90);
+            this.txtFechaInicial.Name = "txtFechaInicial";
+            this.txtFechaInicial.Size = new System.Drawing.Size(94, 20);
+            this.txtFechaInicial.TabIndex = 5;
             // 
-            // label6
+            // label4
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 118);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "ID Membresia:";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(10, 73);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(70, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Fecha Inicial:";
+            // 
+            // txtPrecio
+            // 
+            this.txtPrecio.Location = new System.Drawing.Point(113, 46);
+            this.txtPrecio.Name = "txtPrecio";
+            this.txtPrecio.Size = new System.Drawing.Size(97, 20);
+            this.txtPrecio.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(110, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Precio:";
+            // 
+            // txtDescripcion
+            // 
+            this.txtDescripcion.Location = new System.Drawing.Point(10, 46);
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.Size = new System.Drawing.Size(97, 20);
+            this.txtDescripcion.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 29);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Descripcion:";
             // 
             // listView1
             // 
@@ -202,16 +212,6 @@
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             // 
-            // btnInsertarMembresia
-            // 
-            this.btnInsertarMembresia.Location = new System.Drawing.Point(135, 133);
-            this.btnInsertarMembresia.Name = "btnInsertarMembresia";
-            this.btnInsertarMembresia.Size = new System.Drawing.Size(75, 23);
-            this.btnInsertarMembresia.TabIndex = 6;
-            this.btnInsertarMembresia.Text = "Insertar";
-            this.btnInsertarMembresia.UseVisualStyleBackColor = true;
-            this.btnInsertarMembresia.Click += new System.EventHandler(this.btnInsertarMembresia_Click);
-            // 
             // frmTipoMembresia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -221,7 +221,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmTipoMembresia";
-            this.Text = "frmTipoMembresia";
+            this.Text = "frmTipoSuscripcion";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmTipoMembresia_Load);
             this.groupBox1.ResumeLayout(false);

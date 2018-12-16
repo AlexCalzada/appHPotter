@@ -14,6 +14,7 @@ namespace appHPotter
     public partial class frmIniciarSesion : Form
     {
         private object BDConnection { get; set; }
+        public bool Existe { get; set; }
 
         public frmIniciarSesion()
         {
@@ -22,15 +23,26 @@ namespace appHPotter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Conexion conexion = new Conexion(txtUsuario.Text, txtClave.Text, cmbDB.Text);
-            Formularios.frmPrincipal frmPrincipal = null;
-            switch (cmbDB.Text)
+            Conexion conexion = new Conexion(txtUsuario.Text, txtClave.Text, cmbDB.Text, true);
+            if (string.IsNullOrEmpty(cmbDB.Text))
             {
-                case "SQL":
-                    this.BDConnection = conexion.ObtenerConexion();
-                    frmPrincipal = new Formularios.frmPrincipal(cmbDB.Text, BDConnection);
-                    break;
+                MessageBox.Show("Error.\nNo puede dejar campos vacios.");
+                return;
             }
+            Formularios.frmPrincipal frmPrincipal = null;
+            this.BDConnection = conexion.ObtenerConexion();
+            BDOperaciones BDO = new BDOperaciones(cmbDB.Text, BDConnection);
+            Existe = BDO.VerificarExistencia(txtUsuario.Text, txtClave.Text);
+            if (!Existe)
+            {
+                MessageBox.Show("Error.\nUsuario o Clave incorrectos.");
+                return;
+            }
+            else
+            {
+                MessageBox.Show($"Acceso autorizado.\nBienvenido(a), {txtUsuario.Text}.");
+            }
+            frmPrincipal = new Formularios.frmPrincipal(cmbDB.Text, BDConnection);
             frmPrincipal.Show();
         }
 
@@ -47,7 +59,7 @@ namespace appHPotter
                 }
                 else
                 {
-                    Conexion conexion = new Conexion("Sin valor", "Sin valor", cmbDB.Text);
+                    Conexion conexion = new Conexion("Sin valor", "Sin valor", cmbDB.Text, false);
                     switch (cmbDB.Text)
                     {
                         case "SQL":

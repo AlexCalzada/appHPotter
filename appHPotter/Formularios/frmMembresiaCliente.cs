@@ -37,8 +37,8 @@ namespace appHPotter.Formularios
             }
 
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            bool result = operaciones.InsertarClienteMembresia(txtCliente.Text, txtMembresia.Text);
-            string mensaje = result ? "Nuevo membresia asignada" : "Error no se pudo asignar";
+            bool result = operaciones.InsertarClienteSuscripcion(txtCliente.Text, txtMembresia.Text);
+            string mensaje = result ? "Nueva Suscripcion asignada" : "Error no se pudo asignar";
             MessageBox.Show(mensaje);
         }
 
@@ -74,7 +74,7 @@ namespace appHPotter.Formularios
             listView2.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
             operaciones.CargarEnListViewSql(lvClientes, "SELECT * FROM Cliente");
-            operaciones.CargarEnListViewSql(listView2, "SELECT * FROM Membresia");
+            operaciones.CargarEnListViewSql(listView2, "SELECT * FROM Suscripcion");
         }
     }
 }

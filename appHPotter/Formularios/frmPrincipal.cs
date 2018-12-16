@@ -103,7 +103,42 @@ namespace appHPotter.Formularios
 
         private void eliminarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            frmEliminaRegistro f = new frmEliminaRegistro(BaseDatos, BDConnection, "Membresia");
+            frmEliminaRegistro f = new frmEliminaRegistro(BaseDatos, BDConnection, "Suscripcion");
+            f.MdiParent = this;
+            f.Show();
+        }
+
+        private void insertarUnNuevoCineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCreaCine f = new frmCreaCine(BaseDatos, BDConnection, "Insertar");
+            f.MdiParent = this;
+            f.Show();
+        }
+
+        private void asignarCineAClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCineCliente f = new frmCineCliente(BaseDatos, BDConnection);
+            f.MdiParent = this;
+            f.Show();
+        }
+
+        private void actualizarToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            frmCreaCine f = new frmCreaCine(BaseDatos, BDConnection, "Actualizar");
+            f.MdiParent = this;
+            f.Show();
+        }
+
+        private void eliminarToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            frmCreaCine f = new frmCreaCine(BaseDatos, BDConnection, "Eliminar");
+            f.MdiParent = this;
+            f.Show();
+        }
+
+        private void verCinesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmVerRegistros f = new frmVerRegistros(BaseDatos, BDConnection);
             f.MdiParent = this;
             f.Show();
         }

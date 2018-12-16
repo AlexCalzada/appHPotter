@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +26,23 @@ namespace appHPotter.Clases
 
         public void CargarEnListViewSql(ListView Lista, string consulta)
         {
-            SqlConnection ccn = null;
+            SqlConnection sqlCnx = null;
+            OleDbConnection accCnx = null;
+            MySqlConnection mysqlCnx = null;
+            SQLiteConnection sqliteCnx = null;
             switch (BaseDatos)
             {
                 case "SQL":
-                    ccn = (SqlConnection)BDConnection;
+                    sqlCnx = (SqlConnection)BDConnection;
+                    break;
+                case "MySQL":
+                    mysqlCnx = (MySqlConnection)BDConnection;
+                    break;
+                case "Access":
+                    accCnx = (OleDbConnection)BDConnection;
+                    break;
+                case "SQLite":
+                    sqliteCnx = (SQLiteConnection)BDConnection;
                     break;
             }
             try
@@ -38,12 +53,12 @@ namespace appHPotter.Clases
             catch (Exception ex)
             {
                 MessageBox.Show("Error en la conexión: \n" + ex, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ccn.Close();
+                sqlCnx.Close();
             }
 
             try
             {
-                SqlDataAdapter da = new SqlDataAdapter(consulta, ccn);
+                SqlDataAdapter da = new SqlDataAdapter(consulta, sqlCnx);
 
                 DataSet ds = new DataSet();
                 da.Fill(ds);
@@ -95,19 +110,85 @@ namespace appHPotter.Clases
             return false;
         }
 
-        public bool VerificarExistencia(string Usuario)
+        public bool VerificarExistencia(string Usuario, string Clave = null)
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'";
+                string consulta = string.IsNullOrEmpty(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
                 var cnx = (SqlConnection)BDConnection;
                 SqlCommand command = new SqlCommand(consulta, cnx);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    if (reader.HasRows)
                     {
-                        Result = (reader.FieldCount > 0) ? true : false;
-                        return Result;
+                        if (reader.Read())
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (BaseDatos == "Access")
+            {
+                string consulta = string.IsNullOrEmpty(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
+                var cnx = (OleDbConnection)BDConnection;
+                OleDbCommand command = new OleDbCommand(consulta, cnx);
+                using (OleDbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (BaseDatos == "MySQL")
+            {
+                string consulta = string.IsNullOrEmpty(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
+                var cnx = (MySqlConnection)BDConnection;
+                MySqlCommand command = new MySqlCommand(consulta, cnx);
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (BaseDatos == "SQLite")
+            {
+                string consulta = string.IsNullOrEmpty(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
+                var cnx = (SQLiteConnection)BDConnection;
+                SQLiteCommand command = new SQLiteCommand(consulta, cnx);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
             }
@@ -144,11 +225,11 @@ namespace appHPotter.Clases
             return false;
         }
 
-        public bool InsertarNuevaMembresia(string Membresia)
+        public bool InsertarNuevaSuscripcion(string Suscripcion)
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = $"INSERT INTO TipoMembresia VALUES('{Membresia}',1)";
+                string consulta = $"INSERT INTO TipoSuscripcion VALUES('{Suscripcion}',1)";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
                 {
@@ -159,11 +240,11 @@ namespace appHPotter.Clases
             return false;
         }
 
-        public bool InsertarMembresia(string Descripcion, string FechaInicial, string FechaFinal, string Precio, string IDMembresia)
+        public bool InsertarSuscripcion(string Descripcion, string FechaInicial, string FechaFinal, string Precio, string IDSuscripcion)
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = $"INSERT INTO Membresia VALUES('{Descripcion}','{FechaInicial}','{FechaFinal}',{Precio},{IDMembresia},1)";
+                string consulta = $"INSERT INTO Suscripcion VALUES('{Descripcion}','{FechaInicial}','{FechaFinal}',{Precio},{IDSuscripcion},1)";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
                 {
@@ -174,11 +255,11 @@ namespace appHPotter.Clases
             return false;
         }
 
-        public bool InsertarClienteMembresia(string IDCliente, string IDMembresia)
+        public bool InsertarClienteSuscripcion(string IDCliente, string IDSuscripcion)
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = $"INSERT INTO ClienteMembresia VALUES('{IDCliente}','{IDMembresia}',1)";
+                string consulta = $"INSERT INTO ClienteSuscripcion VALUES('{IDCliente}','{IDSuscripcion}',1)";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
                 {
@@ -204,11 +285,56 @@ namespace appHPotter.Clases
             return false;
         }
 
-        public bool ActualizaMembresia(string Descripcion, string FechaInicial, string FechaFinal, string Precio, string ID)
+        public bool ActualizaSuscripcion(string Descripcion, string FechaInicial, string FechaFinal, string Precio, string ID)
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = $"UPDATE Membresia SET Descripcion = '{Descripcion}', FechaInicial = '{FechaInicial}', FechaFinal = '{FechaFinal}', Precio = {Precio} WHERE idMembresia = {ID}";
+                string consulta = $"UPDATE Suscripcion SET Descripcion = '{Descripcion}', FechaInicial = '{FechaInicial}', FechaFinal = '{FechaFinal}', Precio = {Precio} WHERE idSuscripcion = {ID}";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
+
+        public bool InsertarCine(string Nombre, string Descripcion, string Ubicacion, string Fecha)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"INSERT INTO Cine VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
+
+        public bool InsertarCineCliente(string IDCliente, string IDCine, string Fecha)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"INSERT INTO CineCliente VALUES('{Fecha}',{IDCine},{IDCliente},1)";
+                var cnx = (SqlConnection)BDConnection;
+                using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            return false;
+        }
+
+        public bool ActualizaCine(string Nombre, string Descripcion, string Ubicacion, string Fecha, string ID)
+        {
+            if (BaseDatos == "SQL")
+            {
+                string consulta = $"UPDATE Cine SET Nombre = '{Nombre}', Descripcion = '{Descripcion}', Ubicacion = '{Ubicacion}', FechaInaugurada = '{Fecha}' WHERE idCine = {ID}";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
                 {

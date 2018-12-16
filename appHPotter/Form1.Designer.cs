@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.txtClave = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmbDB = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.btnCrear = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.cmbDB = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtClave = new System.Windows.Forms.TextBox();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,59 +56,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // label1
+            // btnCrear
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Usuario:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 55);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Clave:";
-            // 
-            // txtUsuario
-            // 
-            this.txtUsuario.Location = new System.Drawing.Point(75, 25);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(176, 20);
-            this.txtUsuario.TabIndex = 2;
-            // 
-            // txtClave
-            // 
-            this.txtClave.Location = new System.Drawing.Point(75, 51);
-            this.txtClave.Name = "txtClave";
-            this.txtClave.Size = new System.Drawing.Size(176, 20);
-            this.txtClave.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 91);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Base de datos:";
-            // 
-            // cmbDB
-            // 
-            this.cmbDB.FormattingEnabled = true;
-            this.cmbDB.Items.AddRange(new object[] {
-            "SQL",
-            "Access",
-            "MySQL",
-            "PostgreSQL"});
-            this.cmbDB.Location = new System.Drawing.Point(110, 88);
-            this.cmbDB.Name = "cmbDB";
-            this.cmbDB.Size = new System.Drawing.Size(141, 21);
-            this.cmbDB.TabIndex = 5;
+            this.btnCrear.Location = new System.Drawing.Point(29, 171);
+            this.btnCrear.Name = "btnCrear";
+            this.btnCrear.Size = new System.Drawing.Size(99, 23);
+            this.btnCrear.TabIndex = 7;
+            this.btnCrear.Text = "Crear Usuario";
+            this.btnCrear.UseVisualStyleBackColor = true;
+            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
             // 
             // button1
             // 
@@ -120,15 +76,61 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // btnCrear
+            // cmbDB
             // 
-            this.btnCrear.Location = new System.Drawing.Point(29, 171);
-            this.btnCrear.Name = "btnCrear";
-            this.btnCrear.Size = new System.Drawing.Size(99, 23);
-            this.btnCrear.TabIndex = 7;
-            this.btnCrear.Text = "Crear Usuario";
-            this.btnCrear.UseVisualStyleBackColor = true;
-            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
+            this.cmbDB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbDB.FormattingEnabled = true;
+            this.cmbDB.Items.AddRange(new object[] {
+            "SQL",
+            "Access",
+            "MySQL",
+            "SQLite"});
+            this.cmbDB.Location = new System.Drawing.Point(110, 88);
+            this.cmbDB.Name = "cmbDB";
+            this.cmbDB.Size = new System.Drawing.Size(141, 21);
+            this.cmbDB.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(26, 91);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Base de datos:";
+            // 
+            // txtClave
+            // 
+            this.txtClave.Location = new System.Drawing.Point(75, 51);
+            this.txtClave.Name = "txtClave";
+            this.txtClave.PasswordChar = '*';
+            this.txtClave.Size = new System.Drawing.Size(176, 20);
+            this.txtClave.TabIndex = 3;
+            // 
+            // txtUsuario
+            // 
+            this.txtUsuario.Location = new System.Drawing.Point(75, 25);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(176, 20);
+            this.txtUsuario.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 55);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Clave:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(23, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Usuario:";
             // 
             // frmIniciarSesion
             // 

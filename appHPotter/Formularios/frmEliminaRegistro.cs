@@ -48,7 +48,7 @@ namespace appHPotter.Formularios
 
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
             bool result = operaciones.EliminaRegistro(textBox1.Text, Tabla);
-            string mensaje = result ? $"El registro con ID: {textBox1.Text}, se ha eliminado" : "Error no se pudo eliminar\nEl ID que se desea eliminar ya se encuentra asignado a otro registro";
+            string mensaje = result ? $"El registro con ID: {textBox1.Text}, se ha eliminado" : "Error no se pudo eliminar.\nEl ID que desea eliminar ya se encuentra asignado a otro registro";
             MessageBox.Show(mensaje);
 
             listView1.Clear();

@@ -52,7 +52,7 @@
             this.groupBox1.Size = new System.Drawing.Size(305, 198);
             this.groupBox1.TabIndex = 58;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Membresia";
+            this.groupBox1.Text = "Suscripcion";
             // 
             // lvMembresia
             // 
@@ -79,9 +79,9 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(30, 190);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(75, 13);
+            this.label9.Size = new System.Drawing.Size(79, 13);
             this.label9.TabIndex = 56;
-            this.label9.Text = "ID Membresia:";
+            this.label9.Text = "ID Suscripcion:";
             // 
             // btnActualizar
             // 
@@ -177,7 +177,7 @@
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.label1);
             this.Name = "frmActualizaMembresia";
-            this.Text = "frmActualizaMembresia";
+            this.Text = "frmActualizaSuscripcion";
             this.Load += new System.EventHandler(this.frmActualizaMembresia_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
