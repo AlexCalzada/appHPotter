@@ -107,13 +107,39 @@ namespace appHPotter.Clases
             }
 
             bool ExisteUsuario = VerificarExistencia(Usuario);
-            if (ExisteUsuario) return false; 
-
+            if (ExisteUsuario) return false;
+            string consulta = $"INSERT INTO Usuario(Usuario,Clave,idTipoUsuario,Estatus) VALUES('{Usuario}','{Clave}',2,1)";
             if (BaseDatos == "SQL")
             {
-                string consulta = $"INSERT INTO Usuario VALUES('{Usuario}','{Clave}',2,1)";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "MySQL")
+            {
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
                 {
                     Result = (command.ExecuteNonQuery() > 0) ? true : false;
                     return Result;

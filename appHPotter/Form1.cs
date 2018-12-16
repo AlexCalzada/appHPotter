@@ -60,15 +60,8 @@ namespace appHPotter
                 else
                 {
                     Conexion conexion = new Conexion("Sin valor", "Sin valor", cmbDB.Text, false);
-                    switch (cmbDB.Text)
-                    {
-                        case "SQL":
-                            this.BDConnection = conexion.ObtenerConexion();
-                            frm = new Formularios.frmCreaUsuario(cmbDB.Text, BDConnection);
-                            break;
-                        default:
-                            break;
-                    }
+                    this.BDConnection = conexion.ObtenerConexion();
+                    frm = new Formularios.frmCreaUsuario(cmbDB.Text, BDConnection);
                 }
             }
             frm.Show();
