@@ -52,14 +52,14 @@ namespace appHPotter.Formularios
             MessageBox.Show(mensaje);
 
             listView1.Clear();
-            operaciones.CargarEnListViewSql(listView1, $"SELECT * FROM {Tabla}");
+            operaciones.CargarEnListView(listView1, $"SELECT * FROM {Tabla}");
         }
 
         private void frmEliminaRegistro_Load(object sender, EventArgs e)
         {
             listView1.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            operaciones.CargarEnListViewSql(listView1, $"SELECT * FROM {Tabla}");
+            operaciones.CargarEnListView(listView1, $"SELECT * FROM {Tabla}");
         }
     }
 }

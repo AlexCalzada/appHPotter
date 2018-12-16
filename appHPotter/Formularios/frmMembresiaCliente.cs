@@ -73,8 +73,8 @@ namespace appHPotter.Formularios
             lvClientes.Clear();
             listView2.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            operaciones.CargarEnListViewSql(lvClientes, "SELECT * FROM Cliente");
-            operaciones.CargarEnListViewSql(listView2, "SELECT * FROM Suscripcion");
+            operaciones.CargarEnListView(lvClientes, "SELECT * FROM Cliente");
+            operaciones.CargarEnListView(listView2, "SELECT * FROM Suscripcion");
         }
     }
 }

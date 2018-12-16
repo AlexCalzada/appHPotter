@@ -24,7 +24,7 @@ namespace appHPotter.Clases
             this.BaseDatos = BaseDatos;
         }
 
-        public void CargarEnListViewSql(ListView Lista, string consulta)
+        public void CargarEnListView(ListView Lista, string consulta)
         {
             SqlConnection sqlCnx = null;
             OleDbConnection accCnx = null;
@@ -45,23 +45,37 @@ namespace appHPotter.Clases
                     sqliteCnx = (SQLiteConnection)BDConnection;
                     break;
             }
-            try
-            {
-                //ccn.Close();
-                //ccn.Open();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error en la conexión: \n" + ex, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                sqlCnx.Close();
-            }
 
             try
             {
-                SqlDataAdapter da = new SqlDataAdapter(consulta, sqlCnx);
+                SqlDataAdapter daSql = null;
+                OleDbDataAdapter daAccess = null;
+                MySqlDataAdapter daMySql = null;
+                SQLiteDataAdapter daSqlite = null;
 
                 DataSet ds = new DataSet();
-                da.Fill(ds);
+                switch (BaseDatos)
+                {
+                    case "SQL":
+                        daSql = new SqlDataAdapter(consulta, sqlCnx);
+                        daSql.Fill(ds);
+                        break;
+                    case "MySQL":
+                        daMySql = new MySqlDataAdapter(consulta, mysqlCnx);
+                        daMySql.Fill(ds);
+                        break;
+                    case "Access":
+                        daAccess = new OleDbDataAdapter(consulta, accCnx);
+                        daAccess.Fill(ds);
+                        break;
+                    case "SQLite":
+                        daSqlite = new SQLiteDataAdapter(consulta, sqliteCnx);
+                        daSqlite.Fill(ds);
+                        break;
+                    default:
+                        break;
+                }
+                
 
                 for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
                 {
@@ -81,9 +95,7 @@ namespace appHPotter.Clases
             catch (Exception ex)
             {
                 MessageBox.Show("Error en la conexión: \n" + ex, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //ccn.Close();
             }
-            //ccn.Close();
         }
 
         public bool CrearUsuario(string Usuario, string Clave)
@@ -207,6 +219,36 @@ namespace appHPotter.Clases
                     return Result;
                 }
             }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"INSERT INTO Cliente(Nombre,ApellidoPaterno,ApellidoMaterno,FechaNacimiento,CURP,Telefono,Calle,Colonia,Estatus) VALUES('{Nombre}','{Paterno}','{Materno}','{Fecha}','{CURP}','{Telefono}','{Calle}','{Colonia}',1)";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"INSERT INTO Cliente(Nombre,ApellidoPaterno,ApellidoMaterno,FechaNacimiento,CURP,Telefono,Calle,Colonia,Estatus) VALUES('{Nombre}','{Paterno}','{Materno}','{Fecha}','{CURP}','{Telefono}','{Calle}','{Colonia}',1)";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"INSERT INTO Cliente(Nombre,ApellidoPaterno,ApellidoMaterno,FechaNacimiento,CURP,Telefono,Calle,Colonia,Estatus) VALUES('{Nombre}','{Paterno}','{Materno}','{Fecha}','{CURP}','{Telefono}','{Calle}','{Colonia}',1)";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
             return false;
         }
 
@@ -217,6 +259,36 @@ namespace appHPotter.Clases
                 string consulta = $"INSERT INTO ClienteUsuario VALUES({ClienteID},{UsuarioID},'{FechaAlta}','{FechaBaja}',1)";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"INSERT INTO ClienteUsuario(idCliente,idUsuario,FechaIngreso,FechaBaja,Estatus) VALUES({ClienteID},{UsuarioID},'{FechaAlta}','{FechaBaja}',1)";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"INSERT INTO ClienteUsuario(idCliente,idUsuario,FechaIngreso,FechaBaja,Estatus) VALUES({ClienteID},{UsuarioID},'{FechaAlta}','{FechaBaja}',1)";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"INSERT INTO ClienteUsuario(idCliente,idUsuario,FechaIngreso,FechaBaja,Estatus) VALUES({ClienteID},{UsuarioID},'{FechaAlta}','{FechaBaja}',1)";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
                 {
                     Result = (command.ExecuteNonQuery() > 0) ? true : false;
                     return Result;
@@ -237,6 +309,36 @@ namespace appHPotter.Clases
                     return Result;
                 }
             }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"INSERT INTO TipoSuscripcion(Descripcion,Estatus) VALUES('{Suscripcion}',1)";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"INSERT INTO TipoSuscripcion(Descripcion,Estatus) VALUES('{Suscripcion}',1)";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"INSERT INTO TipoSuscripcion(Descripcion,Estatus) VALUES('{Suscripcion}',1)";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
             return false;
         }
 
@@ -247,6 +349,36 @@ namespace appHPotter.Clases
                 string consulta = $"INSERT INTO Suscripcion VALUES('{Descripcion}','{FechaInicial}','{FechaFinal}',{Precio},{IDSuscripcion},1)";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"INSERT INTO Suscripcion(Descripcion,FechaInicial,FechaFinal,Precio,idTipoSuscripcion,Estatus) VALUES('{Descripcion}','{FechaInicial}','{FechaFinal}',{Precio},{IDSuscripcion},1)";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"INSERT INTO Suscripcion(Descripcion,FechaInicial,FechaFinal,Precio,idTipoSuscripcion,Estatus) VALUES('{Descripcion}','{FechaInicial}','{FechaFinal}',{Precio},{IDSuscripcion},1)";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"INSERT INTO Suscripcion(Descripcion,FechaInicial,FechaFinal,Precio,idTipoSuscripcion,Estatus) VALUES('{Descripcion}','{FechaInicial}','{FechaFinal}',{Precio},{IDSuscripcion},1)";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
                 {
                     Result = (command.ExecuteNonQuery() > 0) ? true : false;
                     return Result;
@@ -267,6 +399,36 @@ namespace appHPotter.Clases
                     return Result;
                 }
             }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"INSERT INTO ClienteSuscripcion(idCliente,idSuscripcion,Estatus) VALUES('{IDCliente}','{IDSuscripcion}',1)";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"INSERT INTO ClienteSuscripcion(idCliente,idSuscripcion,Estatus) VALUES('{IDCliente}','{IDSuscripcion}',1)";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"INSERT INTO ClienteSuscripcion(idCliente,idSuscripcion,Estatus) VALUES('{IDCliente}','{IDSuscripcion}',1)";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
             return false;
         }
 
@@ -277,6 +439,36 @@ namespace appHPotter.Clases
                 string consulta = $"UPDATE Cliente SET Nombre = '{Nombre}', ApellidoPaterno = '{Paterno}', ApellidoMaterno = '{Materno}', FechaNacimiento = '{Fecha}', CURP = '{CURP}', Telefono = '{Telefono}', Calle = '{Calle}', Colonia = '{Colonia}' WHERE idCliente = {IDCliente}";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"UPDATE Cliente SET Nombre = '{Nombre}', ApellidoPaterno = '{Paterno}', ApellidoMaterno = '{Materno}', FechaNacimiento = '{Fecha}', CURP = '{CURP}', Telefono = '{Telefono}', Calle = '{Calle}', Colonia = '{Colonia}' WHERE idCliente = {IDCliente}";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"UPDATE Cliente SET Nombre = '{Nombre}', ApellidoPaterno = '{Paterno}', ApellidoMaterno = '{Materno}', FechaNacimiento = '{Fecha}', CURP = '{CURP}', Telefono = '{Telefono}', Calle = '{Calle}', Colonia = '{Colonia}' WHERE idCliente = {IDCliente}";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"UPDATE Cliente SET Nombre = '{Nombre}', ApellidoPaterno = '{Paterno}', ApellidoMaterno = '{Materno}', FechaNacimiento = '{Fecha}', CURP = '{CURP}', Telefono = '{Telefono}', Calle = '{Calle}', Colonia = '{Colonia}' WHERE idCliente = {IDCliente}";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
                 {
                     Result = (command.ExecuteNonQuery() > 0) ? true : false;
                     return Result;
@@ -297,6 +489,36 @@ namespace appHPotter.Clases
                     return Result;
                 }
             }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"UPDATE Suscripcion SET Descripcion = '{Descripcion}', FechaInicial = '{FechaInicial}', FechaFinal = '{FechaFinal}', Precio = {Precio} WHERE idSuscripcion = {ID}";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"UPDATE Suscripcion SET Descripcion = '{Descripcion}', FechaInicial = '{FechaInicial}', FechaFinal = '{FechaFinal}', Precio = {Precio} WHERE idSuscripcion = {ID}";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"UPDATE Suscripcion SET Descripcion = '{Descripcion}', FechaInicial = '{FechaInicial}', FechaFinal = '{FechaFinal}', Precio = {Precio} WHERE idSuscripcion = {ID}";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
             return false;
         }
 
@@ -304,9 +526,39 @@ namespace appHPotter.Clases
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = $"INSERT INTO Cine VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada,Estatus) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada,Estatus) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada,Estatus) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada,Estatus) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
                 {
                     Result = (command.ExecuteNonQuery() > 0) ? true : false;
                     return Result;
@@ -317,11 +569,42 @@ namespace appHPotter.Clases
 
         public bool InsertarCineCliente(string IDCliente, string IDCine, string Fecha)
         {
+            string consulta = $"INSERT INTO CineCliente(FechaRegistro,idCine,idCliente,Estatus) VALUES('{Fecha}',{IDCine},{IDCliente},1)";
             if (BaseDatos == "SQL")
             {
-                string consulta = $"INSERT INTO CineCliente VALUES('{Fecha}',{IDCine},{IDCliente},1)";
+                
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "MySQL")
+            {
+                //string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                //string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                //string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
                 {
                     Result = (command.ExecuteNonQuery() > 0) ? true : false;
                     return Result;
@@ -332,11 +615,42 @@ namespace appHPotter.Clases
 
         public bool ActualizaCine(string Nombre, string Descripcion, string Ubicacion, string Fecha, string ID)
         {
+            string consulta = $"UPDATE Cine SET Nombre = '{Nombre}', Descripcion = '{Descripcion}', Ubicacion = '{Ubicacion}', FechaInaugurada = '{Fecha}' WHERE idCine = {ID}";
             if (BaseDatos == "SQL")
             {
-                string consulta = $"UPDATE Cine SET Nombre = '{Nombre}', Descripcion = '{Descripcion}', Ubicacion = '{Ubicacion}', FechaInaugurada = '{Fecha}' WHERE idCine = {ID}";
+               
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "MySQL")
+            {
+                //string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                //string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                //string consulta = $"INSERT INTO Cine(Nombre,Descripcion,Ubicacion,FechaInaugurada) VALUES('{Nombre}','{Descripcion}','{Ubicacion}','{Fecha}',1)";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
                 {
                     Result = (command.ExecuteNonQuery() > 0) ? true : false;
                     return Result;
@@ -352,6 +666,57 @@ namespace appHPotter.Clases
                 string consulta = $"DELETE FROM {Tabla} WHERE id{Tabla} = {ID}";
                 var cnx = (SqlConnection)BDConnection;
                 using (SqlCommand command = new SqlCommand(consulta, cnx))
+                {
+                    try
+                    {
+                        Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
+                    return Result;
+                }
+            }
+            if (BaseDatos == "MySQL")
+            {
+                string consulta = $"DELETE FROM {Tabla} WHERE id{Tabla} = {ID}";
+                var cnx = (MySqlConnection)BDConnection;
+                using (MySqlCommand command = new MySqlCommand(consulta, cnx))
+                {
+                    try
+                    {
+                        Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
+                    return Result;
+                }
+            }
+            if (BaseDatos == "Access")
+            {
+                string consulta = $"DELETE FROM {Tabla} WHERE id{Tabla} = {ID}";
+                var cnx = (OleDbConnection)BDConnection;
+                using (OleDbCommand command = new OleDbCommand(consulta, cnx))
+                {
+                    try
+                    {
+                        Result = (command.ExecuteNonQuery() > 0) ? true : false;
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
+                    return Result;
+                }
+            }
+            if (BaseDatos == "SQLite")
+            {
+                string consulta = $"DELETE FROM {Tabla} WHERE id{Tabla} = {ID}";
+                var cnx = (SQLiteConnection)BDConnection;
+                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
                 {
                     try
                     {

@@ -27,7 +27,7 @@ namespace appHPotter.Formularios
         {
             lvClientes.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            operaciones.CargarEnListViewSql(lvClientes, "SELECT * FROM Cliente");
+            operaciones.CargarEnListView(lvClientes, "SELECT * FROM Cliente");
         }
 
         private void lvClientes_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -72,7 +72,7 @@ namespace appHPotter.Formularios
             MessageBox.Show(mensaje);
 
             lvClientes.Clear();
-            operaciones.CargarEnListViewSql(lvClientes, "SELECT * FROM Cliente");
+            operaciones.CargarEnListView(lvClientes, "SELECT * FROM Cliente");
         }
     }
 }

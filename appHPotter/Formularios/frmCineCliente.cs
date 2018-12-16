@@ -28,8 +28,8 @@ namespace appHPotter.Formularios
             lvClientes.Clear();
             lvCines.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListViewSql(lvClientes, "SELECT idCliente AS ID, Nombre + ' ' + ApellidoPaterno + ' ' + ApellidoMaterno AS Cliente FROM Cliente");
-            BDO.CargarEnListViewSql(lvCines, "SELECT * FROM Cine");
+            BDO.CargarEnListView(lvClientes, "SELECT idCliente AS ID, Nombre + ' ' + ApellidoPaterno + ' ' + ApellidoMaterno AS Cliente FROM Cliente");
+            BDO.CargarEnListView(lvCines, "SELECT * FROM Cine");
         }
 
         private void btnAsignar_Click(object sender, EventArgs e)

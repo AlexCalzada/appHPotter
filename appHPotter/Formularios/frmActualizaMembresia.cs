@@ -54,14 +54,14 @@ namespace appHPotter.Formularios
             MessageBox.Show(mensaje);
 
             lvMembresia.Clear();
-            operaciones.CargarEnListViewSql(lvMembresia, "SELECT * FROM Suscripcion");
+            operaciones.CargarEnListView(lvMembresia, "SELECT * FROM Suscripcion");
         }
 
         private void frmActualizaMembresia_Load(object sender, EventArgs e)
         {
             lvMembresia.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            operaciones.CargarEnListViewSql(lvMembresia, "SELECT * FROM Suscripcion");
+            operaciones.CargarEnListView(lvMembresia, "SELECT * FROM Suscripcion");
         }
     }
 }

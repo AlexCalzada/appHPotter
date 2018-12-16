@@ -52,7 +52,7 @@ namespace appHPotter.Formularios
         {
             lvCine.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListViewSql(lvCine, "SELECT * FROM Cine");
+            BDO.CargarEnListView(lvCine, "SELECT * FROM Cine");
         }
 
         private void lvCine_MouseDoubleClick(object sender, MouseEventArgs e)

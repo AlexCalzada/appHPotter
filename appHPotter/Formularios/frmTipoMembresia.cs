@@ -36,7 +36,7 @@ namespace appHPotter.Formularios
             MessageBox.Show(mensaje);
 
             listView1.Clear();
-            operaciones.CargarEnListViewSql(listView1, "SELECT * FROM TipoSuscripcion");
+            operaciones.CargarEnListView(listView1, "SELECT * FROM TipoSuscripcion");
         }
 
         private void btnInsertarMembresia_Click(object sender, EventArgs e)
@@ -56,7 +56,7 @@ namespace appHPotter.Formularios
         {
             listView1.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
-            operaciones.CargarEnListViewSql(listView1, "SELECT * FROM TipoSuscripcion");
+            operaciones.CargarEnListView(listView1, "SELECT * FROM TipoSuscripcion");
         }
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)

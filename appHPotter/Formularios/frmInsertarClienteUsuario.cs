@@ -42,8 +42,8 @@ namespace appHPotter.Formularios
             lvClientes.Clear();
             lvUsuario.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListViewSql(lvClientes, "SELECT idCliente AS ID, Nombre + ' ' + ApellidoPaterno + ' ' + ApellidoMaterno AS Cliente FROM Cliente");
-            BDO.CargarEnListViewSql(lvUsuario, "SELECT idUsuario AS ID, Usuario FROM Usuario");
+            BDO.CargarEnListView(lvClientes, "SELECT idCliente AS ID, Nombre + ' ' + ApellidoPaterno + ' ' + ApellidoMaterno AS Cliente FROM Cliente");
+            BDO.CargarEnListView(lvUsuario, "SELECT idUsuario AS ID, Usuario FROM Usuario");
         }
 
         private void lvClientes_MouseDoubleClick(object sender, MouseEventArgs e)

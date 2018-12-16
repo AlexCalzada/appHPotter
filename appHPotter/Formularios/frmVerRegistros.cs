@@ -19,14 +19,8 @@ namespace appHPotter.Formularios
         public frmVerRegistros(string BaseDatos, object BDConnection)
         {
             InitializeComponent();
-            switch (BaseDatos)
-            {
-                case "SQL":
-                    this.BaseDatos = BaseDatos;
-                    this.BDConnection = BDConnection;
-                    break;
-            }
-
+            this.BaseDatos = BaseDatos;
+            this.BDConnection = BDConnection;
         }
 
         private void toolStripLabel1_Click(object sender, EventArgs e)
@@ -37,21 +31,21 @@ namespace appHPotter.Formularios
         {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListViewSql(listView1, "SELECT * FROM Cliente");
+            BDO.CargarEnListView(listView1, "SELECT * FROM Cliente");
         }
 
         private void verClientesConUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListViewSql(listView1, "SELECT U.Usuario,C.Nombre +  ' ' + C.ApellidoPaterno AS Nombre,C.CURP,c.Telefono,cu.FechaIngreso,cu.FechaBaja,cu.Estatus FROM Cliente C INNER JOIN ClienteUsuario CU ON C.idCliente = CU.idCliente INNER JOIN Usuario U  ON U.idUsuario = CU.idUsuario");
+            BDO.CargarEnListView(listView1, "SELECT U.Usuario,C.Nombre +  ' ' + C.ApellidoPaterno AS Nombre,C.CURP,c.Telefono,cu.FechaIngreso,cu.FechaBaja,cu.Estatus FROM Cliente C INNER JOIN ClienteUsuario CU ON C.idCliente = CU.idCliente INNER JOIN Usuario U  ON U.idUsuario = CU.idUsuario");
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListViewSql(listView1, "SELECT TM.Descripcion AS Suscripcion, c.Nombre + ' ' + c.ApellidoPaterno AS Cliente, c.Telefono, c.Calle + ', ' + c.Colonia AS Direccion,m.FechaInicial, m.FechaFinal, c.Estatus FROM Cliente C INNER JOIN ClienteSuscripcion CM ON C.idCliente = CM.idCliente INNER JOIN Suscripcion M ON M.idSuscripcion = CM.idSuscripcion INNER JOIN TipoSuscripcion TM ON TM.idTipoSuscripcion = M.idTipoSuscripcion");
+            BDO.CargarEnListView(listView1, "SELECT TM.Descripcion AS Suscripcion, c.Nombre + ' ' + c.ApellidoPaterno AS Cliente, c.Telefono, c.Calle + ', ' + c.Colonia AS Direccion,m.FechaInicial, m.FechaFinal, c.Estatus FROM Cliente C INNER JOIN ClienteSuscripcion CM ON C.idCliente = CM.idCliente INNER JOIN Suscripcion M ON M.idSuscripcion = CM.idSuscripcion INNER JOIN TipoSuscripcion TM ON TM.idTipoSuscripcion = M.idTipoSuscripcion");
         }
 
         private void frmVerRegistros_Load(object sender, EventArgs e)
@@ -63,7 +57,7 @@ namespace appHPotter.Formularios
         {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListViewSql(listView1, "SELECT C.Nombre AS Cine, Cl.Nombre + ' ' + Cl.ApellidoPaterno + ' ' + Cl.ApellidoMaterno AS Cliente, Cl.Telefono, C.Ubicacion AS 'Ubicacion del cine', CC.FechaRegistro, CC.Estatus FROM CineCliente CC INNER JOIN Cine C ON C.idCine = CC.idCine INNER JOIN Cliente Cl ON Cl.idCliente = CC.idCliente");
+            BDO.CargarEnListView(listView1, "SELECT C.Nombre AS Cine, Cl.Nombre + ' ' + Cl.ApellidoPaterno + ' ' + Cl.ApellidoMaterno AS Cliente, Cl.Telefono, C.Ubicacion AS 'Ubicacion del cine', CC.FechaRegistro, CC.Estatus FROM CineCliente CC INNER JOIN Cine C ON C.idCine = CC.idCine INNER JOIN Cliente Cl ON Cl.idCliente = CC.idCliente");
         }
     }
 }
