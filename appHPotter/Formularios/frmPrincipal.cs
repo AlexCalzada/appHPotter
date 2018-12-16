@@ -19,7 +19,7 @@ namespace appHPotter.Formularios
         {
             InitializeComponent();
             this.BaseDatos = BaseDatos;
-            this.BDConnection = BDConnection;
+            this.BDConnection = BDConnection; 
         }
 
         private void verClientesToolStripMenuItem_Click(object sender, EventArgs e)
