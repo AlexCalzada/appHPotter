@@ -31,6 +31,11 @@ namespace appHPotter.Formularios
         {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
+            if (BaseDatos == "PostgreSQL")
+            {
+                BDO.CargarEnListView(listView1, @"SELECT * FROM public.""Cliente");
+                return;
+            }
             BDO.CargarEnListView(listView1, "SELECT * FROM Cliente");
         }
 
@@ -38,14 +43,34 @@ namespace appHPotter.Formularios
         {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListView(listView1, "SELECT U.Usuario,C.Nombre +  ' ' + C.ApellidoPaterno AS Nombre,C.CURP,c.Telefono,cu.FechaIngreso,cu.FechaBaja,cu.Estatus FROM Cliente C INNER JOIN ClienteUsuario CU ON C.idCliente = CU.idCliente INNER JOIN Usuario U  ON U.idUsuario = CU.idUsuario");
+            if (BaseDatos == "Access")
+            {
+                BDO.CargarEnListView(listView1, Consultas.accessClienteUsuario);
+                return;
+            }
+            if (BaseDatos == "PostgreSQL")
+            {
+                BDO.CargarEnListView(listView1, Consultas.postqClienteUsuario);
+                return;
+            }
+            BDO.CargarEnListView(listView1, Consultas.sqlClienteUsuario);
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListView(listView1, "SELECT TM.Descripcion AS Suscripcion, c.Nombre + ' ' + c.ApellidoPaterno AS Cliente, c.Telefono, c.Calle + ', ' + c.Colonia AS Direccion,m.FechaInicial, m.FechaFinal, c.Estatus FROM Cliente C INNER JOIN ClienteSuscripcion CM ON C.idCliente = CM.idCliente INNER JOIN Suscripcion M ON M.idSuscripcion = CM.idSuscripcion INNER JOIN TipoSuscripcion TM ON TM.idTipoSuscripcion = M.idTipoSuscripcion");
+            if (BaseDatos == "Access")
+            {
+                BDO.CargarEnListView(listView1, Consultas.accessClienteSuscripcion);
+                return;
+            }
+            if (BaseDatos == "PostgreSQL")
+            {
+                BDO.CargarEnListView(listView1, Consultas.postqClienteSuscripcion);
+                return;
+            }
+            BDO.CargarEnListView(listView1, Consultas.sqlClienteSuscripcion);
         }
 
         private void frmVerRegistros_Load(object sender, EventArgs e)
@@ -57,7 +82,17 @@ namespace appHPotter.Formularios
         {
             listView1.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
-            BDO.CargarEnListView(listView1, "SELECT C.Nombre AS Cine, Cl.Nombre + ' ' + Cl.ApellidoPaterno + ' ' + Cl.ApellidoMaterno AS Cliente, Cl.Telefono, C.Ubicacion AS 'Ubicacion del cine', CC.FechaRegistro, CC.Estatus FROM CineCliente CC INNER JOIN Cine C ON C.idCine = CC.idCine INNER JOIN Cliente Cl ON Cl.idCliente = CC.idCliente");
+            if (BaseDatos == "Access")
+            {
+                BDO.CargarEnListView(listView1, Consultas.accessClienteCine);
+                return;
+            }
+            if (BaseDatos == "PostgreSQL")
+            {
+                BDO.CargarEnListView(listView1, Consultas.postqClienteCine);
+                return;
+            }
+            BDO.CargarEnListView(listView1, Consultas.sqlClienteCine);
         }
     }
 }

@@ -54,6 +54,11 @@ namespace appHPotter.Formularios
             MessageBox.Show(mensaje);
 
             lvMembresia.Clear();
+            if (BaseDatos == "PostgreSQL")
+            {
+                operaciones.CargarEnListView(lvMembresia, @"SELECT * FROM public.""Suscripcion""");
+                return;
+            }
             operaciones.CargarEnListView(lvMembresia, "SELECT * FROM Suscripcion");
         }
 
@@ -61,6 +66,11 @@ namespace appHPotter.Formularios
         {
             lvMembresia.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
+            if (BaseDatos == "PostgreSQL")
+            {
+                operaciones.CargarEnListView(lvMembresia, @"SELECT * FROM public.""Suscripcion""");
+                return;
+            }
             operaciones.CargarEnListView(lvMembresia, "SELECT * FROM Suscripcion");
         }
     }

@@ -84,7 +84,7 @@
             "SQL",
             "Access",
             "MySQL",
-            "SQLite"});
+            "PostgreSQL"});
             this.cmbDB.Location = new System.Drawing.Point(110, 88);
             this.cmbDB.Name = "cmbDB";
             this.cmbDB.Size = new System.Drawing.Size(141, 21);

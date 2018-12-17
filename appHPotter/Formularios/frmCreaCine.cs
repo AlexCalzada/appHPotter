@@ -52,6 +52,11 @@ namespace appHPotter.Formularios
         {
             lvCine.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
+            if (BaseDatos == "PostgreSQL")
+            {
+                BDO.CargarEnListView(lvCine, @"SELECT * FROM public.""Cine""");
+                return;
+            }
             BDO.CargarEnListView(lvCine, "SELECT * FROM Cine");
         }
 

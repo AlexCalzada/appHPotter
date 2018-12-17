@@ -5,6 +5,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using System.Data.SQLite;
+using Npgsql;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace appHPotter.Clases
                 switch (BaseDatos)
                 {
                     case "SQL":
-                        SqlConnection ConnectionSql = new SqlConnection($"Data Source=localhost; Initial Catalog=HPotter_DB;Trusted_Connection=True;");
+                        SqlConnection ConnectionSql = new SqlConnection(OrigenDeDatos.SQLServer);
                         {
                             ConnectionSql.Open();
                             if (ConnectionSql.State == ConnectionState.Open)
@@ -57,7 +58,7 @@ namespace appHPotter.Clases
                         }
                         break;
                     case "Access":
-                        OleDbConnection ConnectionAccess = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\alex_\Documents\Databases\Access\BDHPotter_Access.accdb;Persist Security Info=False;");
+                        OleDbConnection ConnectionAccess = new OleDbConnection(OrigenDeDatos.Access);
                         {
                             ConnectionAccess.Open();
                             if (ConnectionAccess.State == ConnectionState.Open)
@@ -73,7 +74,7 @@ namespace appHPotter.Clases
                         }
                         break;
                     case "MySQL":
-                        MySqlConnection ConnectionMySql = new MySqlConnection(@"Server=localhost;Database=bdhpotter_mysql;Uid=root;Pwd=;");
+                        MySqlConnection ConnectionMySql = new MySqlConnection(OrigenDeDatos.MySQL);
                         {
                             ConnectionMySql.Open();
                             if (ConnectionMySql.State == ConnectionState.Open)
@@ -88,8 +89,8 @@ namespace appHPotter.Clases
                             }
                         }
                         break;
-                    case "SQLite":
-                        SQLiteConnection ConnectionSQLite = new SQLiteConnection(@"Data Source=C:\Users\alex_\Documents\Databases\SQLite\HPotter.db;Version = 3");
+                    case "PostgreSQL":
+                        NpgsqlConnection ConnectionSQLite = new NpgsqlConnection(OrigenDeDatos.PostgreSQL);
                         {
                             ConnectionSQLite.Open();
                             if (ConnectionSQLite.State == ConnectionState.Open)

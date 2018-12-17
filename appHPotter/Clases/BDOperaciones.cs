@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,10 @@ namespace appHPotter.Clases
             SqlConnection sqlCnx = null;
             OleDbConnection accCnx = null;
             MySqlConnection mysqlCnx = null;
-            SQLiteConnection sqliteCnx = null;
+            //SQLiteConnection sqliteCnx = null;
+            NpgsqlConnection posCnx = null;
+
+
             switch (BaseDatos)
             {
                 case "SQL":
@@ -41,8 +45,8 @@ namespace appHPotter.Clases
                 case "Access":
                     accCnx = (OleDbConnection)BDConnection;
                     break;
-                case "SQLite":
-                    sqliteCnx = (SQLiteConnection)BDConnection;
+                case "PostgreSQL":
+                    posCnx = (NpgsqlConnection)BDConnection;
                     break;
             }
 
@@ -51,7 +55,7 @@ namespace appHPotter.Clases
                 SqlDataAdapter daSql = null;
                 OleDbDataAdapter daAccess = null;
                 MySqlDataAdapter daMySql = null;
-                SQLiteDataAdapter daSqlite = null;
+                NpgsqlDataAdapter daPos = null;
 
                 DataSet ds = new DataSet();
                 switch (BaseDatos)
@@ -69,8 +73,8 @@ namespace appHPotter.Clases
                         daAccess.Fill(ds);
                         break;
                     case "SQLite":
-                        daSqlite = new SQLiteDataAdapter(consulta, sqliteCnx);
-                        daSqlite.Fill(ds);
+                        daPos = new NpgsqlDataAdapter(consulta, posCnx);
+                        daPos.Fill(ds);
                         break;
                     default:
                         break;
@@ -136,10 +140,11 @@ namespace appHPotter.Clases
                     return Result;
                 }
             }
-            if (BaseDatos == "SQLite")
+            if (BaseDatos == "PostgreSQL")
             {
-                var cnx = (SQLiteConnection)BDConnection;
-                using (SQLiteCommand command = new SQLiteCommand(consulta, cnx))
+                string query = string.Format(@"INSERT INTO public.""Usuario""(""Usuario"",""Clave"",""idTipoUsuario"",""Estatus"") VALUES('{0}','{1}',4,b'1')",Usuario,Clave);
+                var cnx = (NpgsqlConnection)BDConnection;
+                using (NpgsqlCommand command = new NpgsqlCommand(query, cnx))
                 {
                     Result = (command.ExecuteNonQuery() > 0) ? true : false;
                     return Result;
@@ -148,11 +153,11 @@ namespace appHPotter.Clases
             return false;
         }
 
-        public bool VerificarExistencia(string Usuario, string Clave = null)
+        public bool VerificarExistencia(string Usuario, string Clave = "")
         {
             if (BaseDatos == "SQL")
             {
-                string consulta = string.IsNullOrEmpty(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
+                string consulta = string.IsNullOrWhiteSpace(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
                 var cnx = (SqlConnection)BDConnection;
                 SqlCommand command = new SqlCommand(consulta, cnx);
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -172,7 +177,7 @@ namespace appHPotter.Clases
             }
             else if (BaseDatos == "Access")
             {
-                string consulta = string.IsNullOrEmpty(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
+                string consulta = string.IsNullOrWhiteSpace(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
                 var cnx = (OleDbConnection)BDConnection;
                 OleDbCommand command = new OleDbCommand(consulta, cnx);
                 using (OleDbDataReader reader = command.ExecuteReader())
@@ -192,7 +197,7 @@ namespace appHPotter.Clases
             }
             else if (BaseDatos == "MySQL")
             {
-                string consulta = string.IsNullOrEmpty(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
+                string consulta = string.IsNullOrWhiteSpace(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
                 var cnx = (MySqlConnection)BDConnection;
                 MySqlCommand command = new MySqlCommand(consulta, cnx);
                 using (MySqlDataReader reader = command.ExecuteReader())
@@ -210,12 +215,22 @@ namespace appHPotter.Clases
                     }
                 }
             }
-            else if (BaseDatos == "SQLite")
+            else if (BaseDatos == "PostgreSQL")
             {
-                string consulta = string.IsNullOrEmpty(Clave) ? $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}'" : $"SELECT * FROM Usuario WHERE Usuario = '{Usuario}' AND Clave = '{Clave}'";
-                var cnx = (SQLiteConnection)BDConnection;
-                SQLiteCommand command = new SQLiteCommand(consulta, cnx);
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                string consulta = null ;
+
+                if (string.IsNullOrWhiteSpace(Clave))
+                {
+                    consulta = @"SELECT * FROM public.""Usuario"" WHERE ""Usuario"".""Usuario"" = '" + Usuario + "'";
+                }
+                else
+                {
+                    consulta = string.Format(@"SELECT * FROM public.""Usuario"" WHERE ""Usuario"".""Usuario"" = '{0}' AND ""Usuario"".""Clave"" = '{1}'", Usuario, Clave);
+                }
+
+                var cnx = (NpgsqlConnection)BDConnection;
+                NpgsqlCommand command = new NpgsqlCommand(consulta, cnx);
+                using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.HasRows)
                     {

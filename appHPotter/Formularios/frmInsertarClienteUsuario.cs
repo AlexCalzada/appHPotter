@@ -42,6 +42,12 @@ namespace appHPotter.Formularios
             lvClientes.Clear();
             lvUsuario.Clear();
             BDOperaciones BDO = new BDOperaciones(BaseDatos, BDConnection);
+            if (BaseDatos == "PostgreSQL")
+            {
+                BDO.CargarEnListView(lvClientes, @"SELECT ""Cliente"".""idCliente"",""Cliente"".""Nombre"",""Cliente"".""ApellidoPaterno"", ""Cliente"".""ApellidoMaterno"" FROM public.""Cliente""");
+                BDO.CargarEnListView(lvUsuario, @"SELECT ""Usuario"".""idUsuario"",""Usuario"".""Usuario"" FROM public.""Usuario""");
+                return;
+            }
             BDO.CargarEnListView(lvClientes, "SELECT idCliente AS ID, Nombre + ' ' + ApellidoPaterno + ' ' + ApellidoMaterno AS Cliente FROM Cliente");
             BDO.CargarEnListView(lvUsuario, "SELECT idUsuario AS ID, Usuario FROM Usuario");
         }

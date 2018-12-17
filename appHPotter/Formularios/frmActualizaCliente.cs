@@ -27,6 +27,11 @@ namespace appHPotter.Formularios
         {
             lvClientes.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
+            if (BaseDatos == "PostgreSQL")
+            {
+                operaciones.CargarEnListView(lvClientes, @"SELECT * FROM public.""Cliente""");
+                return;
+            }
             operaciones.CargarEnListView(lvClientes, "SELECT * FROM Cliente");
         }
 
@@ -72,6 +77,11 @@ namespace appHPotter.Formularios
             MessageBox.Show(mensaje);
 
             lvClientes.Clear();
+            if (BaseDatos == "PostgreSQL")
+            {
+                operaciones.CargarEnListView(lvClientes, @"SELECT * FROM public.""Cliente""");
+                return;
+            }
             operaciones.CargarEnListView(lvClientes, "SELECT * FROM Cliente");
         }
     }

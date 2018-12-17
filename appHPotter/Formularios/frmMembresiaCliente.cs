@@ -73,6 +73,12 @@ namespace appHPotter.Formularios
             lvClientes.Clear();
             listView2.Clear();
             BDOperaciones operaciones = new BDOperaciones(BaseDatos, BDConnection);
+            if (BaseDatos == "PostgreSQL")
+            {
+                operaciones.CargarEnListView(lvClientes, @"SELECT * FROM public.""Cliente""");
+                operaciones.CargarEnListView(listView2, @"SELECT * FROM public.""Suscripcion""");
+                return;
+            }
             operaciones.CargarEnListView(lvClientes, "SELECT * FROM Cliente");
             operaciones.CargarEnListView(listView2, "SELECT * FROM Suscripcion");
         }
